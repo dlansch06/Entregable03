@@ -1,5 +1,3 @@
-
-
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.neighbors import KNeighborsClassifier
@@ -10,19 +8,14 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense
 from tensorflow.keras.utils import to_categorical
 
-
 def prepare_data():
     """Carga, normaliza y remodela los datos para los tres modelos."""
     print("--- 1. Carga y Preprocesamiento de Datos ---")
-
     (X_train_raw, y_train), (X_test_raw, y_test) = mnist.load_data()
-
     X_train_norm = X_train_raw.astype('float32') / 255.0
     X_test_norm = X_test_raw.astype('float32') / 255.0
-
     X_train_flat = X_train_norm.reshape(X_train_norm.shape[0], -1) 
     X_test_flat = X_test_norm.reshape(X_test_norm.shape[0], -1)   
-
     X_train_cnn = X_train_norm.reshape((*X_train_norm.shape, 1))
     X_test_cnn = X_test_norm.reshape((*X_test_norm.shape, 1))
     y_train_cnn = to_categorical(y_train, 10)
@@ -76,7 +69,6 @@ def evaluate_and_report(cnn_model, knn_model, svm_model, X_test_cnn, y_test_cnn,
     y_pred_knn = knn_model.predict(X_test_flat)
     svm_accuracy = svm_model.score(X_test_flat, y_test)
 
-    
     print("|              RESUMEN DE PRECISIÓN                |")
     print(f"| CNN: {cnn_accuracy*100:.2f}% |")
     print(f"| KNN: {knn_accuracy*100:.2f}% |")
@@ -85,7 +77,6 @@ def evaluate_and_report(cnn_model, knn_model, svm_model, X_test_cnn, y_test_cnn,
     print("\n--- Métricas Detalladas (CNN) ---")
     print("Reporte de Clasificación:\n", classification_report(y_test, y_pred_cnn))
     print("Matriz de Confusión:\n", confusion_matrix(y_test, y_pred_cnn))
-    
     return y_pred_cnn
 
 def visualize(X_test_raw, y_test, y_pred):
@@ -105,7 +96,6 @@ def visualize(X_test_raw, y_test, y_pred):
     plt.show()
 
 if __name__ == "__main__":
-    
     
     X_train_cnn, y_train_cnn, X_test_cnn, y_test_cnn, \
     X_train_flat, y_train, X_test_flat, y_test, X_test_raw = prepare_data()
